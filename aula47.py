@@ -1,53 +1,64 @@
-# Palavra Secreta
-feitico_novo = 'obliviate'
+import random
 
-# Pergunta para dar início no game
-pergunta = input('Olá, estudante de magia e bruxaria de Hogwarts, qual o seu nome? ')
-print(f'Hmmm... {pergunta} não é? Que nome singular, eu prometo que vou lembrar de você!')
+# Lista de feitiços
+feiticos = ['obliviate', 'expelliarmus', 'lumos', 'nox', 'accio', 'wingardium', 'expecto', 'reducto', 'stupefy', 'alohomora']
 
-# Perguntas para alimentar o jogo
-pergunta_2 = input('Posso te perguntar uma coisa, antes de começarmos? Por favor, responda com SIM ou NÃO! ')
-pergunta_3 = input('Você gostaria de participar de um jogo para descobrir um feitiço novo? Diga SIM ou NÃO: ')
+def iniciar_jogo():
+    # Escolhe um feitiço aleatório
+    feitico_secreto = random.choice(feiticos)
+    palavra_oculta = '*' * len(feitico_secreto)
+    tentativas = 0
 
-# Condição para verificar a resposta "não"
-if pergunta_2.lower() == 'não' or pergunta_3.lower() == 'não':
-    print('Que pena, então em uma próxima vez te ensino algo novo. Até mais!')
-else:
-    # Inicializa o estado da palavra, substituindo todas as letras por '*'
-    palavra_oculta = '*' * len(feitico_novo)
+    print('Olá, estudante de magia e bruxaria de Hogwarts!')
+    nome = input('Diga-me... qual é o seu nome? ')
+    print(f'Hmmm... {nome}, que nome encantador. Anotado na minha memória mágica!')
 
-    # Função para mostrar a palavra atual com as letras reveladas
-    def mostrar_palavra(palavra_oculta):
-        print(f'A palavra secreta é: {palavra_oculta}')
+    # Interação inicial
+    resposta1 = input('Posso te perguntar uma coisa antes de começarmos? (SIM ou NÃO): ').strip().lower()
+    resposta2 = input('Você gostaria de jogar um desafio mágico para descobrir um feitiço secreto? (SIM ou NÃO): ').strip().lower()
 
-    # Condições interagindo com as perguntas
-    if pergunta_2.lower() == 'sim' and pergunta_3.lower() == 'sim':
-        print('Esse jogo vai ser como uma forca, você diz a letra e eu te mostro se tem ou se não tem ela na palavra.')
+    if resposta1 != 'sim' or resposta2 != 'sim':
+        print('Ah... uma pena! Quando quiser brincar com a magia novamente, estarei por aqui.')
+        return
 
-        # Loop para o jogo continuar até o usuário adivinhar a palavra inteira
-        tentativas = 0
-        while '*' in palavra_oculta:
-            letra_usuario = input('Digite uma letra ou a palavra inteira: ').lower()
+    print('\nMuito bem! Este é um jogo como a forca.')
+    print('Você deve adivinhar um feitiço letra por letra, ou arriscar a palavra inteira.')
+    print('Cuidado... errar muitas vezes pode atrair os trasgos do castelo! 🧌')
+    print('-' * 50)
 
-            # Verifica se o usuário digitou a palavra inteira
-            if len(letra_usuario) == len(feitico_novo) and letra_usuario.isalpha():
-                if letra_usuario == feitico_novo:
-                    palavra_oculta = feitico_novo  # A palavra foi adivinhada corretamente
-                    print(f'Parabéns! Você adivinhou a palavra: {palavra_oculta}')
-                    break
+    # Loop principal do jogo
+    while '*' in palavra_oculta:
+        mostrar_palavra(palavra_oculta)
+        tentativa = input('Digite uma letra ou arrisque a palavra completa: ').lower()
+
+        if tentativa == feitico_secreto:
+            palavra_oculta = feitico_secreto
+            print(f'\nINCRÍVEL, {nome.upper()}! Você decifrou o feitiço: {feitico_secreto}')
+            break
+        elif len(tentativa) == 1 and tentativa.isalpha():
+            nova_palavra = ''
+            acerto = False
+            for i in range(len(feitico_secreto)):
+                if tentativa == feitico_secreto[i]:
+                    nova_palavra += tentativa
+                    acerto = True
                 else:
-                    print('Essa não é a palavra correta. Tente novamente!')
+                    nova_palavra += palavra_oculta[i]
+            palavra_oculta = nova_palavra
+
+            if acerto:
+                print('Boa! Essa letra está no feitiço! ✨')
             else:
-                # Atualiza a palavra oculta com as letras certas
-                palavra_oculta = ''.join([letra_usuario if letra_usuario == feitico_novo[i] else palavra_oculta[i] for i in range(len(feitico_novo))])
+                print('Hmm... essa letra não está no feitiço. Tente outra!')
+        else:
+            print('Ops! Tente uma única letra ou o feitiço completo.')
 
-                # Mostra o estado atual da palavra oculta
-                mostrar_palavra(palavra_oculta)
+        tentativas += 1
 
-            # Aumenta o contador de tentativas
-            tentativas += 1
+    print(f'\nVocê descobriu o feitiço em {tentativas} tentativa(s)! Parabéns, jovem bruxo(a)! 🧙‍♀️🧙‍♂️')
 
-        if palavra_oculta == feitico_novo:
-            print(f'BRILHANTE! Você adivinhou o feitiço em {tentativas} tentativa, meus parabéns... Guarde esse conhecimento com você, pode ser importante!')
+def mostrar_palavra(palavra):
+    print(f'\nFeitiço secreto: {palavra}')
 
-        
+# Inicia o jogo
+iniciar_jogo()

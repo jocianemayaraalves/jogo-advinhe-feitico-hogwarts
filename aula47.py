@@ -1,19 +1,3 @@
-"""
-Faça um jogo para o usuário advinhar qual
-a palavra secreta.
-- você vai propor uma palavra secreta
-qualquer e vai dar a possibilidade para
-o usuário digitar apenas uma letra.
-- Qual o usuário digitar uma letra, você
-vai conferir se a letra digitada está 
-na palavra secreta.
-    - se a letra digitada estiver na
-    palavra secreta; exiba a letra;
-    - se a letra digitada não estiver 
-    na palavra secreta; exiba *.
-Faça uma contagem de tentativas do seu 
-usuário.
-"""
 # Palavra Secreta
 feitico_novo = 'obliviate'
 
